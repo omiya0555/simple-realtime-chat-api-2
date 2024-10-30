@@ -15,7 +15,7 @@ class UserController extends Controller
     {
         try {
             // ユーザー数は５人で固定
-            $users = User::all();
+            $users = User::with('icon')->get();
 
             return response()->json([
                 'users'     => $users
@@ -39,6 +39,23 @@ class UserController extends Controller
     {
         // 特定のユーザーの取得
         // 優先度　[　低　]
+        try {
+            // ユーザー数は５人で固定
+            $user = User::where('id', $id)
+                ->with('icon')
+                ->get();
+
+            return response()->json([
+                'user'     => $user
+            ], 200);
+    
+        } catch (\Exception $e) {
+            return response()->json([
+                'message'   => 'Failed to fetch users',
+                'error'     => $e->getMessage()
+            ], 500);
+        }
+    
     }
 
     public function update(Request $request, string $id)

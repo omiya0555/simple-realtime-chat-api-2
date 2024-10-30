@@ -51,7 +51,8 @@ class ChatRoomController extends Controller
                 ->where('chat_room_id', $chatRoomId)
                 ->where('user_id', '!=', $currentUserId)
                 ->join('users', 'chat_room_users.user_id', '=', 'users.id')
-                ->select('users.id', 'users.name', 'users.email') // 必要な情報を選択
+                ->join('user_icons', 'users.icon_id', '=', 'user_icons.id')
+                ->select('users.id', 'users.name', 'users.email', 'user_icons.path')
                 ->first();
     
             if (!$otherUser) {

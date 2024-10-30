@@ -16,6 +16,7 @@ Route::get('/me', [AuthController::class, 'me'])->middleware('auth:sanctum');
 Route::middleware('auth:sanctum')->group(function () {
 
     Route::get('users', [UserController::class, 'index']);
+    Route::get('users/{id}', [UserController::class, 'show']);
     Route::get('user' , function (Request $request){
         return $request->user();
     });
